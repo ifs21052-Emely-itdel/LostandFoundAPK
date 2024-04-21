@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="redish">#FF595E</color>
-    <color name="red">#E74032</color>
-    <color name="green">#1DC65A</color>
+    <color name="chocis">#CA955C</color>
+    <color name="choco">#876445</color>
+    <color name="green">#76BA99</color>
 </resources>

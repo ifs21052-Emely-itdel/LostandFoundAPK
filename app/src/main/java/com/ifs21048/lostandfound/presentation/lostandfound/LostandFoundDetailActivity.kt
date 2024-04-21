@@ -183,7 +183,7 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                     val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                     val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
                     positiveButton.setTextColor(resources.getColor(R.color.green))
-                    negativeButton.setTextColor(resources.getColor(R.color.red))
+                    negativeButton.setTextColor(resources.getColor(R.color.choco))
                 }
 
 

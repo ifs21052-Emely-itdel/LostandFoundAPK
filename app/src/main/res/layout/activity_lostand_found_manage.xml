@@ -132,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="@color/redish"
+                android:backgroundTint="@color/choco"
                 android:text="Simpan"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -162,14 +162,14 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundManageLabelImg"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <Button
                 android:id="@+id/buttonLostandFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/redish"
+                android:backgroundTint="@color/chocis"
                 android:text="Select Image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
