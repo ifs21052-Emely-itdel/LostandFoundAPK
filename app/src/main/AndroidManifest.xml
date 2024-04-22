@@ -16,6 +16,9 @@
         android:theme="@style/Theme.LostAndFound"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.lostandfound.LostandFoundFavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.lostandfound.LostandFoundManageActivity"
             android:exported="false" />
         <activity

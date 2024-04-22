@@ -17,10 +17,10 @@
             android:id="@+id/appbarTodoManage"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#0188A4"
+            android:background="@color/chocis"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:navigationIconTint="@color/white"
-            app:title="Tambah Todo"
+            app:title="Tambah Lost and Found"
             app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -103,17 +103,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundManageLabelDesc"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-<!--            <Spinner-->
-<!--                android:id="@+id/etLostandFoundManageStatus"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:entries="@array/status"-->
-<!--                android:minHeight="48dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.0"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundManageLabelStatus" />-->
+            <!--            <Spinner-->
+            <!--                android:id="@+id/etLostandFoundManageStatus"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:entries="@array/status"-->
+            <!--                android:minHeight="48dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="0.0"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundManageLabelStatus" />-->
 
             <Spinner
                 android:id="@+id/etLostandFoundManageStatus"
@@ -132,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:backgroundTint="@color/choco"
+                android:backgroundTint="@color/chocis"
                 android:text="Simpan"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -162,7 +162,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundManageLabelImg"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <Button
                 android:id="@+id/buttonLostandFound"

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ifs21052.lostandfound.data.repository.AuthRepository
+import com.ifs21052.lostandfound.data.repository.LocalLostandFoundRepository
 import com.ifs21052.lostandfound.data.repository.LostandFoundRepository
 import com.ifs21052.lostandfound.data.repository.UserRepository
 import com.ifs21052.lostandfound.di.Injection
@@ -16,7 +17,8 @@ import com.ifs21052.lostandfound.presentation.register.RegisterViewModel
 class ViewModelFactory(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
-    private val lostandfoundRepository: LostandFoundRepository
+    private val lostandfoundRepository: LostandFoundRepository,
+    private val localLostandFoundRepository: LocalLostandFoundRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -35,7 +37,8 @@ class ViewModelFactory(
                 ProfileViewModel.getInstance(authRepository, userRepository) as T
             }
             modelClass.isAssignableFrom(LostandFoundViewModel::class.java) -> {
-                LostandFoundViewModel.getInstance(lostandfoundRepository) as T
+                LostandFoundViewModel
+                    .getInstance(lostandfoundRepository, localLostandFoundRepository) as T
             }
             else -> throw IllegalArgumentException(
                 "Unknown ViewModel class: " + modelClass.name
@@ -53,7 +56,8 @@ class ViewModelFactory(
                 INSTANCE = ViewModelFactory(
                     Injection.provideAuthRepository(context),
                     Injection.provideUserRepository(context),
-                    Injection.provideLostandFoundRepository(context)
+                    Injection.provideLostandFoundRepository(context),
+                    Injection.provideLocalLostandFoundRepository(context),
                 )
             }
             return INSTANCE as ViewModelFactory

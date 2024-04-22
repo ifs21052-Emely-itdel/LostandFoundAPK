@@ -16,7 +16,7 @@
             android:id="@+id/appbarLostandFoundDetail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#0188A4"
+            android:background="@color/chocis"
             app:navigationIcon="@drawable/ic_arrow_back_24"
             app:navigationIconTint="@color/white"
             app:title="Detail Data Lost and Found"
@@ -120,7 +120,7 @@
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvLostandFoundDetailStatus"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -148,6 +148,14 @@
                 android:layout_gravity="right"
                 android:gravity="end"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivLostandFoundDetailActionFavorite"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/baseline_bookmark_border_24"
+                    tools:ignore="UseAppTint" />
 
                 <ImageView
                     android:id="@+id/ivLostandFoundDetailActionEdit"

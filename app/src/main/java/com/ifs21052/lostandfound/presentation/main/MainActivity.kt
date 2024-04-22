@@ -22,6 +22,7 @@ import com.ifs21052.lostandfound.helper.Utils.Companion.observeOnce
 import com.ifs21052.lostandfound.presentation.ViewModelFactory
 import com.ifs21052.lostandfound.presentation.login.LoginActivity
 import com.ifs21052.lostandfound.presentation.lostandfound.LostandFoundDetailActivity
+import com.ifs21052.lostandfound.presentation.lostandfound.LostandFoundFavoriteActivity
 import com.ifs21052.lostandfound.presentation.lostandfound.LostandFoundManageActivity
 import com.ifs21052.lostandfound.presentation.profile.ProfileActivity
 
@@ -79,6 +80,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.mainMenuLogout -> {
                     viewModel.logout()
                     openLoginActivity()
+                    true
+                }
+                R.id.mainMenuFavoriteLostandFounds -> {
+                    openFavoriteLostandFoundActivity()
                     true
                 }
                 R.id.mainMenuAllData -> {
@@ -206,8 +211,7 @@ class MainActivity : AppCompatActivity() {
                                     ).show()
                                 }
                             }
-                            else -> {
-                            }
+                            else -> {}
                         }
                     }
                 }
@@ -297,6 +301,14 @@ class MainActivity : AppCompatActivity() {
             LostandFoundManageActivity::class.java
         )
         intent.putExtra(LostandFoundManageActivity.KEY_IS_ADD, true)
+        launcher.launch(intent)
+    }
+
+    private fun openFavoriteLostandFoundActivity() {
+        val intent = Intent(
+            this@MainActivity,
+            LostandFoundFavoriteActivity::class.java
+        )
         launcher.launch(intent)
     }
 }
