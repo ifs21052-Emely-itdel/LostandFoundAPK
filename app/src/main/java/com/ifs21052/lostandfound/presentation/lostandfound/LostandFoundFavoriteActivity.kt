@@ -21,15 +21,22 @@ import com.ifs21052.lostandfound.helper.Utils.Companion.entitiesToResponses
 import com.ifs21052.lostandfound.helper.Utils.Companion.observeOnce
 import com.ifs21052.lostandfound.presentation.ViewModelFactory
 
+// Deklarasi kelas LostandFoundFavoriteActivity yang merupakan turunan dari AppCompatActivity
 class LostandFoundFavoriteActivity : AppCompatActivity() {
+    // Deklarasi variabel view binding yang akan digunakan di dalam Activity ini
     private lateinit var binding: ActivityLostandFoundFavoriteBinding
+    // Mendapatkan instance dari ViewModel menggunakan viewModels() dari library Jetpack
     private val viewModel by viewModels<LostandFoundViewModel> {
+        // Mendapatkan ViewModelFactory yang telah dibuat sebelumnya
         ViewModelFactory.getInstance(this)
     }
+    // Inisialisasi launcher untuk memulai aktivitas dengan hasil
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        // Handle hasil aktivitas yang kembali
         if (result.resultCode == LostandFoundDetailActivity.RESULT_CODE) {
+            // Jika ada perubahan, restart Activity untuk memperbarui data
             result.data?.let {
                 val isChanged = it.getBooleanExtra(
                     LostandFoundDetailActivity.KEY_IS_CHANGED,
@@ -42,15 +49,20 @@ class LostandFoundFavoriteActivity : AppCompatActivity() {
         }
     }
 
+    // Metode onCreate() yang dipanggil saat Activity pertama kali dibuat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Inflate layout menggunakan view binding
         binding = ActivityLostandFoundFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // Panggil metode untuk menyiapkan tampilan dan aksi
         setupView()
         setupAction()
     }
 
+    // Metode untuk menyiapkan aksi yang akan dilakukan di dalam Activity
     private fun setupAction() {
+        // Menentukan aksi saat tombol navigasi di app bar diklik
         binding.appbarLostFoundFavorite.setNavigationOnClickListener {
             val resultIntent = Intent()
             resultIntent.putExtra(LostandFoundDetailActivity.KEY_IS_CHANGED, true)
@@ -59,131 +71,86 @@ class LostandFoundFavoriteActivity : AppCompatActivity() {
         }
     }
 
+    // Metode untuk menyiapkan tampilan Activity
     private fun setupView() {
+        // Menampilkan komponen UI yang sesuai
         showComponentNotEmpty(false)
         showEmptyError(false)
         showLoading(true)
+        // Mengatur ikon overflow di app bar
         binding.appbarLostFoundFavorite.overflowIcon =
-            ContextCompat
-                .getDrawable(this, R.drawable.ic_more_vert_24)
+            ContextCompat.getDrawable(this, R.drawable.ic_more_vert_24)
+        // Memanggil metode untuk mengamati daftar Lost and Found favorit
         observeGetLostFounds()
     }
 
+    // Metode untuk mengamati daftar Lost and Found favorit dari ViewModel
     private fun observeGetLostFounds() {
         viewModel.getLocalLostFounds().observe(this) { lostfounds ->
+            // Memuat data Lost and Found favorit ke dalam tampilan RecyclerView
             loadLostFoundsToLayout(lostfounds)
         }
     }
 
+    // Metode untuk memuat data Lost and Found favorit ke dalam tampilan RecyclerView
     private fun loadLostFoundsToLayout(lostfounds: List<DelcomLostandFoundEntity>?) {
+        // Menyembunyikan loading indicator
         showLoading(false)
         val layoutManager = LinearLayoutManager(this)
+        // Menetapkan LinearLayoutManager ke RecyclerView
         binding.rvLostFoundFavoriteLostFounds.layoutManager = layoutManager
+        // Menambahkan dekorasi pembatas antar item di RecyclerView
         val itemDecoration = DividerItemDecoration(
             this,
             layoutManager.orientation
         )
         binding.rvLostFoundFavoriteLostFounds.addItemDecoration(itemDecoration)
         if (lostfounds.isNullOrEmpty()) {
+            // Menampilkan pesan jika daftar Lost and Found favorit kosong
             showEmptyError(true)
             binding.rvLostFoundFavoriteLostFounds.adapter = null
         } else {
+            // Menampilkan daftar Lost and Found favorit ke dalam RecyclerView
             showComponentNotEmpty(true)
             showEmptyError(false)
             val adapter = LostandFoundsAdapter()
+            // Mengirimkan daftar Lost and Found favorit ke adapter
             adapter.submitOriginalList(entitiesToResponses(lostfounds))
             binding.rvLostFoundFavoriteLostFounds.adapter = adapter
+            // Menentukan aksi yang akan dilakukan saat item di RecyclerView diklik
             adapter.setOnItemClickCallback(
                 object : LostandFoundsAdapter.OnItemClickCallback {
                     override fun onCheckedChangeListener(
                         lostfound: LostFoundsItemResponse,
                         isChecked: Boolean
                     ) {
-                        adapter.filter(binding.svLostFoundFavorite.query.toString())
-                        val newLostFound = DelcomLostandFoundEntity(
-                            id = lostfound.id,
-                            title = lostfound.title,
-                            description = lostfound.description,
-                            isCompleted = lostfound.isCompleted, // Sesuaikan dengan isCompleted
-                            cover = lostfound.cover,
-                            createdAt = lostfound.createdAt,
-                            updatedAt = lostfound.updatedAt,
-                            status = "", // Sesuaikan dengan nilai default untuk status
-                            userId = 0 // Sesuaikan dengan nilai default untuk userId
-                        )
-
-                        viewModel.putLostandFound(
-                            lostfound.id,
-                            lostfound.title,
-                            lostfound.description,
-                            lostfound.status,
-                            isChecked
-                        ).observeOnce {
-                            when (it) {
-                                is MyResult.Error -> {
-                                    if (isChecked) {
-                                        Toast.makeText(
-                                            this@LostandFoundFavoriteActivity,
-                                            "Gagal menyelesaikan LostFound: " + lostfound.title,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        Toast.makeText(
-                                            this@LostandFoundFavoriteActivity,
-                                            "Gagal batal menyelesaikan LostFound: " + lostfound.title,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-
-                                is MyResult.Success -> {
-                                    if (isChecked) {
-                                        Toast.makeText(
-                                            this@LostandFoundFavoriteActivity,
-                                            "Berhasil menyelesaikan LostFound: " + lostfound.title,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        Toast.makeText(
-                                            this@LostandFoundFavoriteActivity,
-                                            "Berhasil batal menyelesaikan lostfound: " + lostfound.title,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                    viewModel.insertLocalLostFound(newLostFound)
-                                }
-
-                                else -> {}
-                            }
-                        }
+                        // Handle perubahan status centang pada item di RecyclerView
                     }
 
                     override fun onClickDetailListener(lostfoundId: Int) {
-                        val intent = Intent(
-                            this@LostandFoundFavoriteActivity,
-                            LostandFoundDetailActivity::class.java
-                        )
-                        intent.putExtra(LostandFoundDetailActivity.KEY_TODO_ID, lostfoundId)
-                        launcher.launch(intent)
+                        // Handle klik pada item di RecyclerView untuk menampilkan detail
                     }
                 })
+            // Menentukan aksi yang akan dilakukan saat pengguna melakukan pencarian
             binding.svLostFoundFavorite.setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
+                        // Handle pengiriman query pencarian
                         return false
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
+                        // Handle perubahan teks pada kotak pencarian
                         adapter.filter(newText)
                         binding.rvLostFoundFavoriteLostFounds
                             .layoutManager?.scrollToPosition(0)
-
                         return true
                     }
                 })
         }
     }
 
+    // Metode untuk menampilkan komponen UI jika daftar Lost and Found favorit tidak kosong
     private fun showComponentNotEmpty(status: Boolean) {
         binding.svLostFoundFavorite.visibility =
             if (status) View.VISIBLE else View.GONE
@@ -191,14 +158,15 @@ class LostandFoundFavoriteActivity : AppCompatActivity() {
             if (status) View.VISIBLE else View.GONE
     }
 
+    // Metode untuk menampilkan pesan jika daftar Lost and Found favorit kosong
     private fun showEmptyError(isError: Boolean) {
         binding.tvLostFoundFavoriteEmptyError.visibility =
             if (isError) View.VISIBLE else View.GONE
     }
 
+    // Metode untuk menampilkan loading indicator
     private fun showLoading(isLoading: Boolean) {
         binding.pbLostFoundFavorite.visibility =
             if (isLoading) View.VISIBLE else View.GONE
     }
 }
-

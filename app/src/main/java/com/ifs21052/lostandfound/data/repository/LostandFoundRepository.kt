@@ -5,6 +5,7 @@ import com.ifs21052.lostandfound.data.remote.MyResult
 import com.ifs21052.lostandfound.data.remote.response.DelcomResponse
 import com.ifs21052.lostandfound.data.remote.retrofit.IApiService
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import retrofit2.HttpException
 
 class LostandFoundRepository private constructor(
@@ -73,7 +74,7 @@ class LostandFoundRepository private constructor(
     fun getLostandFounds(
         isCompleted: Int?,
         isMe: Int?,
-        status : String?,
+        status: String?,
     ) = flow {
         emit(MyResult.Loading)
         try {
@@ -135,6 +136,29 @@ class LostandFoundRepository private constructor(
             )
         }
     }
+
+    fun addCoverLostandFound(
+        lostandfoundId: Int,
+        cover: MultipartBody.Part,
+    ) = flow {
+        emit(MyResult.Loading)
+        try
+        {
+            //get success message
+            emit(MyResult.Success(apiService.addCoverLostandFound(lostandfoundId, cover)))
+        } catch (e: HttpException) {
+            //get error message
+            val jsonInString = e.response()?.errorBody()?.string()
+            emit(
+                MyResult.Error(
+                    Gson()
+                        .fromJson(jsonInString, DelcomResponse::class.java)
+                        .message
+                )
+            )
+        }
+    }
+
 
     companion object {
         @Volatile

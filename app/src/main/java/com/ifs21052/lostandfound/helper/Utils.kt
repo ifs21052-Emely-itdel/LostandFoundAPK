@@ -7,30 +7,39 @@ import com.ifs21052.lostandfound.data.remote.MyResult
 import com.ifs21052.lostandfound.data.remote.response.AuthorLostandFoundsResponse
 import com.ifs21052.lostandfound.data.remote.response.LostFoundsItemResponse
 
+// Kelas utilitas untuk menyimpan fungsi-fungsi bantuan.
 class Utils {
-    companion object{
+    companion object {
+        // Fungsi untuk mengamati LiveData sekali saja.
         fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
+            // Buat observer baru.
             val observerWrapper = object : Observer<T> {
+                // Implementasi onChanged.
                 override fun onChanged(value: T) {
+                    // Panggil observer yang diberikan.
                     observer(value)
-                    if (value is MyResult.Success<*> ||
-                        value is MyResult.Error
-                    ) {
+                    // Hapus observer setelah panggilan pertama jika nilai adalah MyResult.Success atau MyResult.Error.
+                    if (value is MyResult.Success<*> || value is MyResult.Error) {
                         removeObserver(this)
                     }
                 }
             }
+            // Amati LiveData secara permanen dengan observer yang baru dibuat.
             observeForever(observerWrapper)
         }
+
+        // Fungsi untuk mengonversi daftar entitas DelcomLostandFoundEntity menjadi daftar respons LostFoundsItemResponse.
         fun entitiesToResponses(entities: List<DelcomLostandFoundEntity>): List<LostFoundsItemResponse> {
+            // Gunakan fungsi map untuk melakukan transformasi setiap entitas menjadi respons yang sesuai.
             return entities.map {
+                // Konversi setiap entitas menjadi respons yang sesuai.
                 LostFoundsItemResponse(
-                    cover = it.cover ?: "", // Jika cover bisa null, tambahkan handling null
+                    cover = it.cover ?: "", // Gunakan cover jika ada, jika tidak gunakan string kosong.
                     updatedAt = it.updatedAt,
-                    userId = it.userId, // Sesuaikan dengan kebutuhan Anda, karena tidak ada field yang cocok di DelcomLostFoundEntity
+                    userId = it.userId, // Sesuaikan dengan kebutuhan Anda, karena tidak ada field yang cocok di DelcomLostFoundEntity.
                     author = AuthorLostandFoundsResponse(
-                        name = "Unknown",
-                        photo = ""
+                        name = "Unknown", // Nama penulis default adalah "Unknown".
+                        photo = "" // Foto penulis default adalah string kosong.
                     ),
                     description = it.description,
                     createdAt = it.createdAt,
@@ -42,6 +51,4 @@ class Utils {
             }
         }
     }
-
-
 }

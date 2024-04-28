@@ -133,13 +133,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="@color/chocis"
-                android:text="Simpan"
+                android:text="Save"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonLostandFound"
+                app:layout_constraintTop_toBottomOf="@+id/btnTodoManageGallery"
                 app:layout_constraintVertical_bias="0.0" />
 
             <ProgressBar
@@ -154,7 +154,7 @@
                 app:layout_constraintTop_toTopOf="@+id/btnLostandFoundManageSave" />
 
             <ImageView
-                android:id="@+id/ivImageSelected"
+                android:id="@+id/ivTodoManageCover"
                 android:layout_width="136dp"
                 android:layout_height="128dp"
                 android:layout_marginTop="8dp"
@@ -165,7 +165,7 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <Button
-                android:id="@+id/buttonLostandFound"
+                android:id="@+id/btnTodoManageGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -174,7 +174,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivImageSelected" />
+                app:layout_constraintTop_toBottomOf="@+id/ivTodoManageCover" />
 
             <TextView
                 android:id="@+id/tvLostandFoundManageLabelImg"

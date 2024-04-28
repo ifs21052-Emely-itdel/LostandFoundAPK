@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ifs21052.lostandfound.presentation.profile.ProfileActivity">
+    tools:context=".presentation.profile.ProfileActivity">
 
     <LinearLayout
         android:id="@+id/llProfile"
@@ -26,8 +26,7 @@
             android:layout_marginTop="32dp"
             android:background="@color/white"
             android:padding="15dp"
-            app:srcCompat="@drawable/eme" />
-
+            app:srcCompat="@drawable/ic_person" />
         <TextView
             android:id="@+id/tvProfileName"
             android:layout_width="wrap_content"
@@ -49,6 +48,20 @@
             style="@style/Text.P7"/>
 
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnEditProfile"
+        style="@style/TextBold.H6"
+        android:layout_width="359dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="264dp"
+        android:backgroundTint="@color/chocis"
+        android:text="Edit Profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llProfile" />
 
     <ImageView
         android:id="@+id/ivProfileBack"

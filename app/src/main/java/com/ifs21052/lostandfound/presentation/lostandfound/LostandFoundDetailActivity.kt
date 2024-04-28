@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
 import com.ifs21052.lostandfound.R
 import com.ifs21052.lostandfound.data.local.entity.DelcomLostandFoundEntity
 import com.ifs21052.lostandfound.data.model.DelcomLostandFound
@@ -101,8 +102,6 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                 tvLostandFoundDetailDate.text = "Dibuat pada: ${lostandfound.createdAt}"
                 tvLostandFoundDetailDesc.text = lostandfound.description
 
-                cbLostandFoundDetailIsCompleted.isChecked = lostandfound.isCompleted == 1
-
                 val status = if (lostandfound.status.equals("found", ignoreCase = true)) {
                     highlight("Found", Color.BLUE)
                 } else {
@@ -110,6 +109,17 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                 }
 
                 tvLostandFoundDetailStatus.text = status
+
+                if(lostandfound.cover != null){
+                    ivTodoDetailCover.visibility = View.VISIBLE
+
+                    Glide.with(this@LostandFoundDetailActivity)
+                        .load(lostandfound.cover)
+                        .placeholder(R.drawable.ic_image_24)
+                        .into(ivTodoDetailCover)
+                }else{
+                    ivTodoDetailCover.visibility = View.GONE
+                }
 
                 viewModel.getLocalLostFound(lostandfound.id).observeOnce {
                     if(it != null){
@@ -153,6 +163,8 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
+
+                cbLostandFoundDetailIsCompleted.isChecked = lostandfound.isCompleted == 1
 
                 cbLostandFoundDetailIsCompleted.setOnCheckedChangeListener { _, isChecked ->
                     viewModel.putLostandFound(
@@ -231,8 +243,6 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                     positiveButton.setTextColor(resources.getColor(R.color.green))
                     negativeButton.setTextColor(resources.getColor(R.color.choco))
                 }
-
-
 
                 ivLostandFoundDetailActionEdit.setOnClickListener {
                     val delcomLostandFound = DelcomLostandFound(

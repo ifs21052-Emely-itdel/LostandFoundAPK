@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setupView()
         setupAction()
     }
@@ -120,6 +121,29 @@ class MainActivity : AppCompatActivity() {
                     is MyResult.Loading -> {
                         showLoading(true)
                     }
+
+                    is MyResult.Success -> {
+                        showLoading(false)
+                        loadTodosToLayout(result.data)
+                    }
+
+                    is MyResult.Error -> {
+                        showLoading(false)
+                        showEmptyError(true)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeGetMyLostandFounds() {
+        // Panggil fungsi getLostandFounds() dengan menyertakan nilai isMe
+        viewModel.getLostandFound().observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is MyResult.Loading -> {
+                        showLoading(true)
+                    }
                     is MyResult.Success -> {
                         showLoading(false)
                         loadTodosToLayout(result.data)
@@ -173,6 +197,7 @@ class MainActivity : AppCompatActivity() {
                     isChecked: Boolean
                 ) {
                     adapter.filter(binding.svMain.query.toString())
+
                     viewModel.putLostandFound(
                         lostandfound.id,
                         lostandfound.title,
@@ -238,27 +263,6 @@ class MainActivity : AppCompatActivity() {
                         return true
                     }
                 })
-        }
-    }
-
-    private fun observeGetMyLostandFounds() {
-        // Panggil fungsi getLostandFounds() dengan menyertakan nilai isMe
-        viewModel.getLostandFound().observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is MyResult.Loading -> {
-                        showLoading(true)
-                    }
-                    is MyResult.Success -> {
-                        showLoading(false)
-                        loadTodosToLayout(result.data)
-                    }
-                    is MyResult.Error -> {
-                        showLoading(false)
-                        showEmptyError(true)
-                    }
-                }
-            }
         }
     }
 
