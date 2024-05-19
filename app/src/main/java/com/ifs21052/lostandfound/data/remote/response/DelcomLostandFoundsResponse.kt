@@ -44,7 +44,10 @@ data class LostFoundsItemResponse(
 	var isCompleted: Int,
 
 	@field:SerializedName("status")
-	var status: String
+	var status: String,
+
+//	@field:SerializedName("is_me")
+//	var isMe: Int
 )
 
 data class DataLostandFoundsResponse(

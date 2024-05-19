@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                     is MyResult.Error -> {
                         showLoading(false)
                         AlertDialog.Builder(this).apply {
-                            setTitle("Oh No!")
+                            setTitle("I am sorry!")
                             setMessage(result.error)
                             setPositiveButton("Oke") { _, _ -> }
                             create()

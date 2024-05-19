@@ -46,6 +46,7 @@ class Utils {
                     id = it.id,
                     title = it.title,
                     isCompleted = it.isCompleted,
+//                    isMe = 1,
                     status = it.status
                 )
             }

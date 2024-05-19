@@ -26,9 +26,9 @@
         <TextView
             android:id="@+id/tvItemLostandFoundTitle"
             style="@style/TextBold.H6"
-            android:layout_width="339dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="12dp"
+            android:layout_width="272dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="99dp"
             android:layout_marginEnd="268dp"
             android:text="Judul Barang"
             android:textSize="16sp"
@@ -42,9 +42,9 @@
         <TextView
             android:id="@+id/tvItemLostandFoundDesc"
             style="@style/Text.P7"
-            android:layout_width="352dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="12dp"
+            android:layout_width="273dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="99dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="240dp"
             android:text="Deskripsi barang"
@@ -53,6 +53,20 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivLostFoundItem"
+            android:layout_width="87dp"
+            android:layout_height="95dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvItemLostandFoundTitle"
+            app:layout_constraintHorizontal_bias="0.083"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_image_24"
+            tools:src="@tools:sample/avatars" />
 
         <ImageView
             android:id="@+id/ivItemLostandFoundDetail"

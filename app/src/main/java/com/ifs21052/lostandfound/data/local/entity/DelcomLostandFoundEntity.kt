@@ -38,5 +38,8 @@ data class DelcomLostandFoundEntity(
     var status: String,
 
     @ColumnInfo(name = "userId")
-    var userId: Int
+    var userId: Int,
+
+//    @ColumnInfo(name = "is_me")
+//    var isMe: Int,
 ) : Parcelable

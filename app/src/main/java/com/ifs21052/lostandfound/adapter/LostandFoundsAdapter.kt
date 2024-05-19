@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ifs21052.lostandfound.data.remote.response.LostFoundsItemResponse
 import com.ifs21052.lostandfound.databinding.ItemRowLostandfoundBinding
 
@@ -59,11 +60,17 @@ class LostandFoundsAdapter :
                 tvItemLostandFoundTitle.text = data.title
                 cbItemLostandFoundIsFinished.isChecked = data.isCompleted == 1
                 val status = if (data.status.equals("found", ignoreCase = true)) {
-                    highlight("Found", Color.BLUE)
+                    val colorCode = Color.parseColor("#CA955C")
+                    highlight("Found", colorCode)
                 }else {
                     highlight("Lost", Color.RED)
                 }
                 tvItemLostandFoundDesc.text = status
+                data.cover?.let { coverUrl ->
+                    Glide.with(itemView)
+                        .load(coverUrl)
+                        .into(ivLostFoundItem)
+                }
             }
         }
 

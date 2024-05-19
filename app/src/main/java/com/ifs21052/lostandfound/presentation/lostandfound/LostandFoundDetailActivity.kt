@@ -151,7 +151,8 @@ class LostandFoundDetailActivity : AppCompatActivity() {
                             createdAt = lostandfound.createdAt,
                             updatedAt = lostandfound.updatedAt,
                             status = "", // Anda perlu memberikan nilai default untuk status
-                            userId = 0 // Anda perlu memberikan nilai default untuk userId
+                            userId = 0,
+//                            isMe= 1,// Anda perlu memberikan nilai default untuk userId
                         )
 
                         setFavorite(true)
