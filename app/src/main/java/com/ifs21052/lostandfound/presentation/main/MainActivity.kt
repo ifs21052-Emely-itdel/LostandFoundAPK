@@ -8,6 +8,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             ContextCompat
                 .getDrawable(this, R.drawable.ic_more_vert_24)
 
-        observeGetLostandFounds()
+        observeGetLostandFounds(null,null,null)
     }
 
     private fun setupAction() {
@@ -83,20 +84,77 @@ class MainActivity : AppCompatActivity() {
                     openLoginActivity()
                     true
                 }
-                R.id.mainMenuFavoriteLostandFounds -> {
+                R.id.save -> {
                     openFavoriteLostandFoundActivity()
                     true
                 }
-                R.id.mainMenuAllData -> {
-                    // Ketika menu "All Data" diklik, panggil fungsi getLostandFounds()
-                    observeGetLostandFounds()
+
+                R.id.modal ->{
+                    val checkedItems = booleanArrayOf(false, false, false, false, false)
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder
+                        .setTitle("Pilih yang ingin ditampilkan")
+                        .setPositiveButton("Pilih") { dialog, which ->
+                            val saya = if (checkedItems[0]) 1 else null
+
+                            val lostorfound: String? = if(checkedItems[1]) {
+                                if(checkedItems[2]) {
+                                    null
+                                } else {
+                                    "lost"
+                                }
+                            } else {
+                                if(checkedItems[2]) {
+                                    "found"
+                                } else {
+                                    null
+                                }
+                            }
+
+                            val status: Int? = if(checkedItems[3]) {
+                                if(checkedItems[4]) {
+                                    null
+                                } else {
+                                    1
+                                }
+                            } else {
+                                if(checkedItems[4]) {
+                                    0
+                                } else {
+                                    null
+                                }
+                            }
+
+                            observeGetLostandFounds(status, saya, lostorfound)
+                        }
+                        .setNegativeButton("Batal") { dialog, which ->
+                            // Do something else.
+                        }
+                        .setMultiChoiceItems(
+                            arrayOf("Saya", "Lost", "Found", "Completed", "Incompleted"), checkedItems) { dialog, which, isChecked ->
+                            checkedItems[which] = isChecked
+                        }
+
+//                        Log.d("CheckedItemsDump", "Checked items: ${checkedItems.contentToString()}")
+
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
                     true
                 }
-                R.id.mainMenuMyData -> {
-                    // Ketika menu "My Data" diklik, panggil fungsi getLostandFound()
-                    observeGetMyLostandFounds()
-                    true
-                }
+//                R.id.mainMenuFavoriteLostandFounds -> {
+//                    openFavoriteLostandFoundActivity()
+//                    true
+//                }
+//                R.id.mainMenuAllData -> {
+//                    // Ketika menu "All Data" diklik, panggil fungsi getLostandFounds()
+//                    observeGetLostandFounds()
+//                    true
+//                }
+//                R.id.mainMenuMyData -> {
+//                    // Ketika menu "My Data" diklik, panggil fungsi getLostandFound()
+//                    observeGetMyLostandFounds()
+//                    true
+//                }
                 else -> false
             }
         }
@@ -114,8 +172,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeGetLostandFounds() {
-        viewModel.getLostandFounds().observe(this) { result ->
+    private fun observeGetLostandFounds(
+        isCompleted: Int?,
+        isMe: Int?,
+        status: String?
+    ) {
+        viewModel.getLostandFounds(isCompleted,isMe,status).observe(this) { result ->
             if (result != null) {
                 when (result) {
                     is MyResult.Loading -> {
@@ -136,26 +198,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeGetMyLostandFounds() {
-        // Panggil fungsi getLostandFounds() dengan menyertakan nilai isMe
-        viewModel.getLostandFound().observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is MyResult.Loading -> {
-                        showLoading(true)
-                    }
-                    is MyResult.Success -> {
-                        showLoading(false)
-                        loadTodosToLayout(result.data)
-                    }
-                    is MyResult.Error -> {
-                        showLoading(false)
-                        showEmptyError(true)
-                    }
-                }
-            }
-        }
-    }
+//    private fun observeGetMyLostandFounds() {
+//        // Panggil fungsi getLostandFounds() dengan menyertakan nilai isMe
+//        viewModel.getLostandFound().observe(this) { result ->
+//            if (result != null) {
+//                when (result) {
+//                    is MyResult.Loading -> {
+//                        showLoading(true)
+//                    }
+//                    is MyResult.Success -> {
+//                        showLoading(false)
+//                        loadTodosToLayout(result.data)
+//                    }
+//                    is MyResult.Error -> {
+//                        showLoading(false)
+//                        showEmptyError(true)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun loadTodosToLayout(response: DelcomLostandFoundsResponse) {
         // Periksa apakah response atau data pada response null

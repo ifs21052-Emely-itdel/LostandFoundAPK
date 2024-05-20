@@ -94,6 +94,13 @@ class LostandFoundManageActivity : AppCompatActivity() {
                 }
                 observePostLostandFound(title, description, status)
             }
+            btnTodoManageCam.setOnClickListener {
+                startCamera()
+            }
+
+            btnTodoManageGallery.setOnClickListener {
+                startGallery()
+            }
         }
     }
 
@@ -168,6 +175,9 @@ class LostandFoundManageActivity : AppCompatActivity() {
 
                 observePutLostandFound(lostandFound.id, title, description, status, lostandFound.isCompleted)
 
+            }
+            btnTodoManageCam.setOnClickListener {
+                startCamera()
             }
             btnTodoManageGallery.setOnClickListener {
                 startGallery()
